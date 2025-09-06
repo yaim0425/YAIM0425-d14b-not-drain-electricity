@@ -207,8 +207,8 @@ function GMOD.copy(orig)
 
     --- Copiar la información
     for k, v in pairs(orig) do
-        local New_key = (type(k) == "table") and GPrefix.copy(k) or k
-        local New_val = (type(v) == "table") and GPrefix.copy(v) or v
+        local New_key = (type(k) == "table") and GMOD.copy(k) or k
+        local New_val = (type(v) == "table") and GMOD.copy(v) or v
         Copy[New_key] = New_val
     end
 
