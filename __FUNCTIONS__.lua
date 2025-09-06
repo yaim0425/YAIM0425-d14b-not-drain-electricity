@@ -86,6 +86,8 @@ function GMOD.get_id_and_name(that_mod)
     that_mod.name = Name
     that_mod.prefix = GMOD.name .. "-" .. IDs .. "-"
 
+    return that_mod
+
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
