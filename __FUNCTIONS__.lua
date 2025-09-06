@@ -211,6 +211,36 @@ function GMOD.get_tables(array, key, value, recursive)
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Contar los elementos en la tabla
+---- __ADVERTENCIA:__ El conteo NO es recursivo
+--- @param array table # Tabla en la cual buscar
+--- @return any #
+---- Conteo de los elementos de la tabla
+---- o nil si la tabla esta vacia
+function GMOD.get_length(array)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Valdación
+    if type(array) ~= "table" then
+        return
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Variable de salida
+    local Output = 0
+
+    --- Contar campos
+    for _ in pairs(array) do
+        Output = Output + 1
+    end
+
+    --- Devolver el resultado
+    return Output > 0 and Output or nil
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------------------------------
 
 --- Copia cada tabla se copia siempre, sin compartir referencias
