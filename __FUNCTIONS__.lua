@@ -235,6 +235,7 @@ function GMOD.var_dump(...)
             return "{ }"
         end
 
+        --- Devolver el resultado
         return "{" .. table.concat(Items, ",") .. "\n" .. indent .. "}"
 
         --- --- --- --- --- --- --- --- --- --- --- --- ---
