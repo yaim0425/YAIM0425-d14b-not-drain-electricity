@@ -292,7 +292,7 @@ function GMOD.var_dump(...)
                 value = value:gsub("\t", "")
                 value = value:gsub("  ", " ")
                 value = "[[\n\t" .. value .. "\n]]"
-                for i = 1, GPrefix.get_length(seen), 1 do
+                for i = 1, GMOD.get_length(seen), 1 do
                     value = value:gsub("\n", "\n\t")
                 end
                 return value
