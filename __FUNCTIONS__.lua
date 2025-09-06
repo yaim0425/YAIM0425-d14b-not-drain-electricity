@@ -269,14 +269,14 @@ end
 ---------------------------------------------------------------------------------------------------
 
 --- Copia cada tabla se copia siempre, sin compartir referencias
---- @param orig any
+--- @param value any
 --- @return any
-function GMOD.copy(orig)
+function GMOD.copy(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Valdación
-    if type(orig) ~= "table" then
-        return orig
+    if type(value) ~= "table" then
+        return value
     end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -285,7 +285,7 @@ function GMOD.copy(orig)
     local Copy = {}
 
     --- Copiar la información
-    for k, v in pairs(orig) do
+    for k, v in pairs(value) do
         local New_key = (type(k) == "table") and GMOD.copy(k) or k
         local New_val = (type(v) == "table") and GMOD.copy(v) or v
         Copy[New_key] = New_val
