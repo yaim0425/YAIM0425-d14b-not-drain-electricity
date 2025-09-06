@@ -6,7 +6,7 @@
 --- that_mod.id
 --- that_mod.name
 --- that_mod.prefix
-function GMOD.get_id_and_name(that_mod)
+function GMOD.get_id_and_name()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Nivel 2 porque se llama desde otra función
@@ -65,7 +65,7 @@ function GMOD.get_id_and_name(that_mod)
         if #IDs == 0 then return nil, nil end
 
         --- Devolver IDs y resto del nombre directamente
-        return IDs, #Rest_parts > 0 and table.concat(Rest_parts, "-") or nil
+        return IDs[1], #Rest_parts > 0 and table.concat(Rest_parts, "-") or nil
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
@@ -81,12 +81,15 @@ function GMOD.get_id_and_name(that_mod)
     --- Dividir el nombre por guiones
     local IDs, Name = get_id_and_name(Mod_name)
 
-    --- Información propia del mod
-    that_mod.id = IDs and IDs[1] or nil
-    that_mod.name = Name
-    that_mod.prefix = GMOD.name .. "-" .. IDs .. "-"
+    --- No es un mod valido
+    if not IDs then return end
 
-    return that_mod
+    --- Información propia del mod
+    local Output = {}
+    Output.id = IDs
+    Output.name = Name
+    Output.prefix = GMOD.name .. "-" .. IDs .. "-"
+    return Output
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
