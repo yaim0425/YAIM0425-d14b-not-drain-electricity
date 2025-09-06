@@ -102,6 +102,93 @@ end
 
 ---------------------------------------------------------------------------------------------------
 
+--- Devuelve el elemento cuyo key y value se igual al dado
+--- @param array table # Tabla en la cual buscar
+--- @param key string|nil # propiedad a buscar
+--- @param value any|nil # Valor a buscar
+--- @param recursive boolean # Busqueda recursiva
+--- @return any #
+---- Array con las tablas que contienen el key y value dado
+---- o nil si no lo encuentra
+function GMOD.get_tables(array, key, value, recursive)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Validación
+    if type(array) ~= "table" then return end
+    if key == nil and value == nil then return end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Coincidencias encontradas
+    local Results = {}
+    local Added_results = {}
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Buscar las coincidencia
+    local function Search(tbl)
+        local Found = false
+
+        -- Caso: key y value
+        if key ~= nil and value ~= nil then
+            if tbl[key] == value then
+                Found = true
+            end
+        end
+
+        -- Caso: solo key
+        if key ~= nil and value == nil then
+            if tbl[key] ~= nil then
+                Found = true
+            end
+        end
+
+        -- Caso: solo value
+        if key == nil and value ~= nil then
+            for _, v in pairs(tbl) do
+                if v == value then
+                    Found = true
+                    break
+                end
+            end
+        end
+
+        --- Agregar la tabla
+        if Found then
+            if Added_results[tbl] == nil then
+                table.insert(Results, tbl)
+            end
+        end
+
+        --- Buscar en las subtablas
+        if recursive then
+            for _, v in pairs(tbl) do
+                if type(v) == "table" then
+                    Search(v)
+                end
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Iniciar la busqueda
+    for _, v in pairs(array) do
+        if type(v) == "table" then
+            Search(v)
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Devolver el resultado
+    return #Results > 0 and Results or nil
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
+---------------------------------------------------------------------------------------------------
+
 --- Copia cada tabla se copia siempre, sin compartir referencias
 --- @param orig any
 --- @return any
