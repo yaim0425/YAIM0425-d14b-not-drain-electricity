@@ -258,14 +258,6 @@ function GMOD.var_dump(...)
         table.insert(Output, Result)
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-
-
-
-
-    --- --- --- --- --- --- --- --- --- --- --- --- ---
-
     ---> Mostrar el resultado
     log("\n>>>\n" .. table.concat(Output, "\n") .. "\n<<<")
 
