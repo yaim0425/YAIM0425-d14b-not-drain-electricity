@@ -62,10 +62,16 @@ function GMOD.get_id_and_name()
         --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- No hay IDs
-        if #IDs == 0 then return nil, nil end
+        if #IDs ~= 0 then return end
 
-        --- Devolver IDs y resto del nombre directamente
-        return IDs[1], #Rest_parts > 0 and table.concat(Rest_parts, "-") or nil
+        --- El MOD no tiene nombre
+        local Rest = nil
+        if #Rest_parts > 0 then Rest = table.concat(Rest_parts, "-") end
+        if not Rest then return end
+        if Rest == "" then return end
+
+        --- Devolver IDs y resto del nombre
+        return IDs[1], Rest
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
@@ -83,7 +89,6 @@ function GMOD.get_id_and_name()
 
     --- No es un mod valido
     if not IDs then return end
-    if not Name then return end
 
     --- Información propia del mod
     local Output = {}
