@@ -52,7 +52,7 @@ function GMOD.get_id_and_name()
         -- Extraer los IDs válidos
         local IDs, Rest_parts = {}, {}
         for _, Part in ipairs(Parts) do
-            if Part:match("^[a-z]%d[A-Z]%d%d[a-z]$") then
+            if Part:match("^i%dMOD%d%d$") then
                 table.insert(IDs, Part)
             else
                 table.insert(Rest_parts, Part)
