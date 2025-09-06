@@ -42,8 +42,8 @@ function GMOD.get_id_and_name()
     local Path = Source:sub(1, 1) == "@" and Source:sub(2) or Source
 
     --- Objetener el nombre del directorio
-    local Mod_name = Path:match("__([^/]+)__")
-    if not Mod_name then return end
+    local MOD_name = Path:match("__([^/]+)__")
+    if not MOD_name then return end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -110,7 +110,7 @@ function GMOD.get_id_and_name()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Dividir el nombre por guiones
-    local IDs, Name = get_id_and_name(Mod_name)
+    local IDs, Name = get_id_and_name(MOD_name)
 
     --- No es un mod valido
     if not IDs then return end
