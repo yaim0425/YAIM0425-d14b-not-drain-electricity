@@ -2,7 +2,92 @@
 ---> __FUNCTIONS__.lua <---
 ---------------------------------------------------------------------------------------------------
 
+--- Obtiener información del nombre de la carpeta
+--- that_mod.id
+--- that_mod.name
+--- that_mod.prefix
+function GMOD.get_id_and_name(that_mod)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+    --- Nivel 2 porque se llama desde otra función
+    local Info = debug.getinfo(2, "S")
+    local Source = Info.source
+
+    --- Elimina el prefijo @ si viene de un archivo
+    local Path = Source:sub(1, 1) == "@" and Source:sub(2) or Source
+
+    --- Objetener el nombre del directorio
+    local Mod_name = Path:match("__([^/]+)__")
+    if not Mod_name then return end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Separa de la cadena dada los IDs y el resto del nombre
+    --- @param full_name string
+    --- @return table|nil # IDs encontrados como lista
+    --- @return string|nil # Nombre sin los IDs ni el prefijo
+    local function get_id_and_name(full_name)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- Contenedor del nombre en partes
+        local Parts = {}
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        -- Dividir en partes separadas por guiones
+        for segment in string.gmatch(full_name, "[^%-]+") do
+            if segment ~= GMOD.name then
+                table.insert(Parts, segment)
+            end
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        -- Extraer los IDs válidos
+        local IDs, Rest_parts = {}, {}
+        for _, Part in ipairs(Parts) do
+            if Part:match("^[a-z]%d[A-Z]%d%d[a-z]$") then
+                table.insert(IDs, Part)
+            else
+                table.insert(Rest_parts, Part)
+            end
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- No hay IDs
+        if #IDs == 0 then return nil, nil end
+
+        --- Devolver IDs y resto del nombre directamente
+        return IDs, #Rest_parts > 0 and table.concat(Rest_parts, "-") or nil
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Dividir el nombre por guiones
+    local IDs, Name = get_id_and_name(Mod_name)
+
+    --- Información propia del mod
+    that_mod.id = IDs and IDs[1] or nil
+    that_mod.name = Name
+    that_mod.prefix = GMOD.name .. "-" .. IDs .. "-"
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
 
 ---------------------------------------------------------------------------------------------------
 
