@@ -241,6 +241,31 @@ function GMOD.get_length(array)
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Devuelve el key que le corresponde al valor dado
+--- @param array table # Tabla en la cual buscar
+--- @param value any # Valor a buscar
+--- @return any #
+---- __integer:__ Posición de la primera coincidencia con el valor
+---- __nil:__ El valor dado no es valido
+function GMOD.get_key(array, value)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Valdación
+    if type(array) ~= "table" then return end
+    if type(value) == "nil" then return end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Buscar el valor
+    for Key, Value in pairs(array) do
+        if value == Value then
+            return Key
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------------------------------
 
 --- Copia cada tabla se copia siempre, sin compartir referencias
