@@ -31,19 +31,25 @@ _G.settings = _G.settings or {}
 --- that_mod.id
 --- that_mod.name
 --- that_mod.prefix
-function GMOD.get_id_and_name()
+function GMOD.get_id_and_name(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-    --- Nivel 2 porque se llama desde otra función
-    local Info = debug.getinfo(2, "S")
-    local Source = Info.source
+    if type(value) ~= "nil" then
+        if type(value) ~= "string" then
+            return
+        end
+    else
+        --- Nivel 2 porque se llama desde otra función
+        local Info = debug.getinfo(2, "S")
+        local Source = Info.source
 
-    --- Elimina el prefijo @ si viene de un archivo
-    local Path = Source:sub(1, 1) == "@" and Source:sub(2) or Source
+        --- Elimina el prefijo @ si viene de un archivo
+        local Path = Source:sub(1, 1) == "@" and Source:sub(2) or Source
 
-    --- Objetener el nombre del directorio
-    local MOD_name = Path:match("__([^/]+)__")
-    if not MOD_name then return end
+        --- Objetener el nombre del directorio
+        value = Path:match("__([^/]+)__")
+        if not value then return end
+    end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -110,7 +116,7 @@ function GMOD.get_id_and_name()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Dividir el nombre por guiones
-    local IDs, Name = get_id_and_name(MOD_name)
+    local IDs, Name = get_id_and_name(value)
 
     --- No es un mod valido
     if not IDs then return end
