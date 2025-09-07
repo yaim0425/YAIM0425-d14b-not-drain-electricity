@@ -7,8 +7,6 @@
   "description": "Base utility library intended to be used by other MODs developed by the user yaim0425. [[I accept suggestions]]",
   "homepage": "https://github.com/yaim0425/YAIM0425-i5MOD50-core",
   "dependencies": [
-    "base",
-
     "? Yuoki",
     "? Krastorio2",
     "? factorioplus",
