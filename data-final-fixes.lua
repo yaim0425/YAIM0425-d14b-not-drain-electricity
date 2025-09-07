@@ -428,6 +428,29 @@ function This_MOD.filter_data()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Clasificar la información de settings.startup
+---- GMOD.Setting
+function This_MOD.load_setting()
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Inicializar el contenedor
+    GMOD.setting = {}
+
+    --- Recorrer las opciones de configuración
+    for option, value in pairs(settings.startup) do
+        --- Separar los datos esperados
+        local ID, Name = GMOD.get_id_and_name(option)
+
+        --- Validar los datos obtenidos
+        if ID and Name then
+            GMOD.setting[ID] = GMOD.setting[ID] or {}
+            GMOD.setting[ID][Name] = value.value
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------------------------------
 
 
