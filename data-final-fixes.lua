@@ -1,53 +1,53 @@
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 ---> data-final-fixes.lua <---
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 
 
 
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 ---> Validar si se cargó antes <---
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 if GMOD and GMOD.name then return end
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 
 
 
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 ---> Cargar las funciones y constantes <---
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 require("__CONSTANTS__")
 require("__FUNCTIONS__")
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 
 
 
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 ---> Contenedor de este archivo <---
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 local This_MOD = GMOD.get_id_and_name()
 if not This_MOD then return end
 GMOD[This_MOD.id] = This_MOD
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 
 
 
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 ---> Inicio del MOD <---
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 function This_MOD.start()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -75,15 +75,15 @@ function This_MOD.start()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 
 
 
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 ---> Acciones <---
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 --- Darle formato a la propiedad "minable"
 function This_MOD.format_minable()
@@ -378,7 +378,192 @@ function This_MOD.change_orders()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
----------------------------------------------------------------------------------------------------
+--- Establecer traducción en todos los elementos
+function This_MOD.set_localised()
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Traducir estas secciones
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Establecer la traducción
+    for type, subgroup in pairs({
+        tile = GMOD.tiles,
+        fluid = GMOD.fluids,
+        entity = GMOD.entities,
+        equipment = GMOD.equipments
+    }) do
+        if type ~= "tile" then subgroup = { subgroup } end
+        for _, elements in pairs(subgroup) do
+            for _, element in pairs(elements) do
+                if element.localised_name then
+                    if type(element.localised_name) == "table" and element.localised_name[1] ~= "" then
+                        element.localised_name = { "", element.localised_name }
+                    end
+                end
+                if not element.localised_name then
+                    element.localised_name = { "", { type .. "-name." .. element.name } }
+                end
+                if not element.localised_description then
+                    element.localised_description = { "", { type .. "-description." .. element.name } }
+                end
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- Funciones a usar
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Establece el nombre de la receta
+    local function set_localised(name, recipe, field)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- Valores a usar
+        local Field = "localised_" .. field
+        local fluid = GMOD.fluids[name]
+        local item = GMOD.items[name]
+
+        --- El resultado es un objeto
+        if item then
+            --- Nombre del objeto por defecto
+            recipe[Field] = item[Field]
+
+            --- Traducción para una entidad
+            if item.place_result then
+                local Entiy = GMOD.entities[item.place_result]
+                item[Field] = Entiy[Field]
+                recipe[Field] = Entiy[Field]
+            end
+
+            --- Traducción para un suelo
+            if item.place_as_tile then
+                local tile = data.raw.tile[item.place_as_tile.result]
+                item[Field] = tile[Field]
+                recipe[Field] = tile[Field]
+            end
+
+            --- Traducción para un equipamiento
+            if item.place_as_equipment_result then
+                local result = item.place_as_equipment_result
+                local equipment = GMOD.equipments[result]
+                if equipment then
+                    item[Field] = equipment[Field]
+                    recipe[Field] = equipment[Field]
+                end
+            end
+
+            --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        end
+
+        --- El resultado es un liquido
+        if fluid then recipe[Field] = fluid[Field] end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Traducción de los objetos y las recetas
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Establecer la traducción de los objetos
+    for _, item in pairs(GMOD.items) do
+        if item.localised_name then
+            if type(item.localised_name) == "table" and item.localised_name[1] ~= "" then
+                item.localised_name = { "", item.localised_name }
+            end
+        end
+        for _, field in pairs({ "name", "description" }) do
+            local Field = "localised_" .. field
+            if not item[Field] then
+                item[Field] = { "", { "item-" .. field .. "." .. item.name } }
+                set_localised(item.name, {}, field)
+            end
+        end
+    end
+
+    --- Establecer la traducción en la receta
+    for _, recipes in pairs(GMOD.recipes) do
+        if recipes.localised_name then
+            if type(recipes.localised_name) == "table" and recipes.localised_name[1] ~= "" then
+                recipes.localised_name = { "", recipes.localised_name }
+            end
+        end
+
+        for _, recipe in pairs(recipes) do
+            for _, field in pairs({ "name", "description" }) do
+                local Field = "localised_" .. field
+                --- Establece el nombre de la receta
+                if not recipe[Field] then
+                    --- Recetas con varios resultados
+                    if #recipe.results ~= 1 then
+                        if not recipe.main_product or recipe.main_product == "" then
+                            --- Traducción por defecto
+                            recipe[Field] = { "", { "recipe-" .. field .. "." .. recipe.name } }
+                        else
+                            --- Usar objeto o fluido de referencia
+                            set_localised(recipe.main_product, recipe, field)
+                        end
+                    end
+
+                    --- Receta con unico resultado
+                    if #recipe.results == 1 then
+                        local result = recipe.results[1]
+                        set_localised(result.name, recipe, field)
+                    end
+                end
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Traducción de las tecnologias
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Actualizar el apodo del nombre
+    for _, tech in pairs(data.raw.technology) do
+        --- Renombrar
+        local Full_name = tech.name
+
+        --- Separar la información
+        local Name, Level = Full_name:match("(.+)-(%d+)")
+        if Level then Level = " " .. (Level or "") end
+        if not Name then Name = Full_name end
+
+        --- Corrección para las tecnologías infinitas
+        if tech.unit and tech.unit.count_formula then
+            Level = nil
+        end
+
+        --- Construir el apodo
+        if tech.localised_name then
+            if tech.localised_name[1] ~= "" then
+                tech.localised_name = { "", tech.localised_name }
+            end
+        else
+            tech.localised_name = { "", { "technology-name." .. Name }, Level }
+        end
+        tech.localised_description = { "", { "technology-description." .. Name } }
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
+--------------------------------------------------------------------------
 
 --- Clasificar la información de data.raw
 --- GMOD.items
@@ -697,15 +882,15 @@ function This_MOD.load_setting()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 
 
 
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 --- Iniciar el MOD
 This_MOD.start()
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
