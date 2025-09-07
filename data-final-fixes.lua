@@ -155,7 +155,7 @@ function This_MOD.format_icons()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
---- Crear espacios entre los elementos
+--- Cambiar los orders de los elementos
 function This_MOD.change_orders()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     ---> Inicializar las vaiables
