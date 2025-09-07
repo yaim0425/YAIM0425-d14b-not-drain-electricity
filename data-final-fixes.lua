@@ -66,6 +66,8 @@ function GMOD.get_technology(value)
     ---> Lista de nombres de recetas
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+    if type(value) == "nil" then return end
+
     local Recipe_list = {}
     if type(value) == "string" then
         table.insert(Recipe_list, value)
