@@ -1,7 +1,7 @@
 {
   "name": "YAIM0425-i5MOD50-core",
   "version": "0.0.1",
-  "title": "i5MOD50",
+  "title": "YAIM0425 i5MOD50 core",
   "author": "YAIM0425",
   "factorio_version": "2.0",
   "description": "Base utility library intended to be used by other MODs developed by the user yaim0425. [[I accept suggestions]]",
