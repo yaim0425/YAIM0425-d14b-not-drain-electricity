@@ -413,20 +413,19 @@ function This_MOD.format_minable()
     --- @param element table
     local function Format(element)
         --- Validar
-        local minable = element.minable
-        if not minable then return end
-        if not minable.result then return end
+        if not element.minable then return end
+        if not element.minable.result then return end
 
         --- Dar el formato deseado
-        minable.results = { {
+        element.minable.results = { {
             type = "item",
-            name = minable.result,
-            amount = minable.count or 1
+            name = element.minable.result,
+            amount = element.minable.count or 1
         } }
 
         --- Borrar los valores reubicados
-        minable.result = nil
-        minable.count = nil
+        element.minable.result = nil
+        element.minable.count = nil
     end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
