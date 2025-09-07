@@ -58,6 +58,148 @@ function GMOD.get_item_create_entity(entity)
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Devuelve la tecnología que desbloquea una o varias recetas
+--- @param value table # receta (tabla con .name) o lista de recetas
+--- @return table|nil # Tecnología que desbloquea la receta o recetas
+function GMOD.get_technology(value)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Lista de nombres de recetas
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    local Recipe_list = {}
+    if type(value) == "string" then
+        table.insert(Recipe_list, value)
+    elseif value.name then
+        table.insert(Recipe_list, value.name)
+    elseif type(value) == "table" then
+        for _, r in pairs(value) do
+            if type(r) == "string" then
+                table.insert(Recipe_list, r)
+            elseif type(r) == "table" and r.name then
+                table.insert(Recipe_list, r.name)
+            end
+        end
+    end
+    if #Recipe_list == 0 then return end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Función auxiliar para comparar dos tecnologías
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    local function compare(old, new, expensive)
+        if (not expensive and old.level > new.level)
+            or (expensive and old.level < new.level) then
+            return new
+        elseif old.level == new.level then
+            local Old_unit = old.unit
+            local New_unit = new.unit
+            local Old_ingredients = Old_unit and #Old_unit.ingredients or 0
+            local New_ingredients = New_unit and #New_unit.ingredients or 0
+            if (not expensive and Old_ingredients > New_ingredients)
+                or (expensive and Old_ingredients < New_ingredients) then
+                return new
+            elseif Old_ingredients == New_ingredients then
+                local Old_count = Old_unit and Old_unit.count or 0
+                local New_count = New_unit and New_unit.count or 0
+                if (not expensive and Old_count > New_count)
+                    or (expensive and Old_count < New_count) then
+                    return new
+                end
+            end
+        end
+        return old
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Buscar tecnologías que desbloquean las recetas
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    local function find_techs_for_recipes(recipes)
+        local Techs = {}
+        for _, tech in pairs(data.raw.technology) do
+            if tech.effects then
+                for _, effect in pairs(tech.effects) do
+                    if effect.type == "unlock-recipe" then
+                        for _, R in ipairs(recipes) do
+                            if effect.recipe == R then
+                                Techs[tech.name] = tech
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        return Techs
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Buscar tecnologías directas
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    local Recipe_techs = find_techs_for_recipes(Recipe_list)
+
+    if next(Recipe_techs) then
+        local Key = next(Recipe_techs)
+        local Selected = Recipe_techs[Key]
+        for _, tech in pairs(Recipe_techs) do
+            Selected = compare(Selected, tech, false)
+        end
+        return Selected
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Si no hay directas, buscar por los ingredientes
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    local Ingredient_recipes = {}
+    for _, recipe_name in ipairs(Recipe_list) do
+        local Recipe = data.raw.recipe[recipe_name]
+        for _, ingredient in pairs(Recipe.ingredients) do
+            local Name = ingredient.name or ingredient[1]
+            for _, recipe in pairs(GMOD.recipes[Name]) do
+                table.insert(Ingredient_recipes, recipe.name)
+            end
+        end
+    end
+
+    local Ingredient_techs = find_techs_for_recipes(Ingredient_recipes)
+
+    if next(Ingredient_techs) then
+        local Key = next(Ingredient_techs)
+        local Selected = Ingredient_techs[Key]
+        for _, tech in pairs(Ingredient_techs) do
+            Selected = compare(Selected, tech, true)
+        end
+        return Selected
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------
 
 
