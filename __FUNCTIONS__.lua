@@ -285,6 +285,20 @@ function GMOD.digit_count(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Agrega ceros a la izquierda hasta completar los digitos
+--- @param digits integer # __Ejemplo:__ _5_
+--- @param value integer # __Ejemplo:__ _123_
+--- @return string # __Ejemplo:__ _00123_
+function GMOD.pad_left_zeros(digits, value)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    if type(digits) ~= "number" then return "" end
+    if type(value) ~= "number" then return "" end
+    return string.format("%0" .. digits .. "d", value)
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------------------------------
 
 --- Copia cada tabla se copia siempre, sin compartir referencias
