@@ -182,14 +182,13 @@ function GMOD.get_technology(value)
         local Recipe = data.raw.recipe[recipe_name]
         for _, ingredient in pairs(Recipe.ingredients) do
             local Name = ingredient.name or ingredient[1]
-            for _, recipe in pairs(GMOD.recipes[Name]) do
+            for _, recipe in pairs(GMOD.recipes[Name] or {}) do
                 table.insert(Ingredient_recipes, recipe.name)
             end
         end
     end
 
     local Ingredient_techs = find_techs_for_recipes(Ingredient_recipes)
-
     if next(Ingredient_techs) then
         local Key = next(Ingredient_techs)
         local Selected = Ingredient_techs[Key]
