@@ -92,6 +92,93 @@ end
 ---> Acciones <---
 ---------------------------------------------------------------------------
 
+--- Darle formato a la propiedad "minable"
+function This_MOD.format_minable()
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Hacer el cambio
+    --- @param element table
+    local function format(element)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- Validar
+        if not element.minable then return end
+        if not element.minable.result then return end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- Dar el formato deseado
+        element.minable.results = { {
+            type = "item",
+            name = element.minable.result,
+            amount = element.minable.count or 1
+        } }
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- Borrar los valores reubicados
+        element.minable.result = nil
+        element.minable.count = nil
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Hacer el cambio
+    for _, elements in pairs(data.raw) do
+        for _, element in pairs(elements) do
+            format(element)
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
+--- Darle formato a la propiedad "icons"
+function This_MOD.format_icons()
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Hacer el cambio
+    --- @param element table
+    local function format(element)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- Validar
+        if element.icons then return end
+        if not element.icon then return end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- Dar el formato deseado
+        element.icons = { {
+            icon = element.icon,
+            icon_size = element.icon_size ~= 64 and element.icon_size or nil
+        } }
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        --- Borrar los valores reubicados
+        element.icon_size = nil
+        element.icon = nil
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Hacer el cambio
+    for _, elements in pairs(data.raw) do
+        for _, element in pairs(elements) do
+            format(element)
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
+---------------------------------------------------------------------------
+
 --- Clasificar la información de data.raw
 --- GMOD.items
 --- GMOD.tiles
@@ -408,91 +495,6 @@ function This_MOD.load_setting()
 end
 
 ---------------------------------------------------------------------------
-
---- Darle formato a la propiedad "minable"
-function This_MOD.format_minable()
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-    --- Hacer el cambio
-    --- @param element table
-    local function format(element)
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-        --- Validar
-        if not element.minable then return end
-        if not element.minable.result then return end
-
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-        --- Dar el formato deseado
-        element.minable.results = { {
-            type = "item",
-            name = element.minable.result,
-            amount = element.minable.count or 1
-        } }
-
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-        --- Borrar los valores reubicados
-        element.minable.result = nil
-        element.minable.count = nil
-
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    end
-
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-    --- Hacer el cambio
-    for _, elements in pairs(data.raw) do
-        for _, element in pairs(elements) do
-            format(element)
-        end
-    end
-
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-end
-
---- Darle formato a la propiedad "icons"
-function This_MOD.format_icons()
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-    --- Hacer el cambio
-    --- @param element table
-    local function format(element)
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-        --- Validar
-        if element.icons then return end
-        if not element.icon then return end
-
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-        --- Dar el formato deseado
-        element.icons = { {
-            icon = element.icon,
-            icon_size = element.icon_size ~= 64 and element.icon_size or nil
-        } }
-
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-        --- Borrar los valores reubicados
-        element.icon_size = nil
-        element.icon = nil
-
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    end
-
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-    --- Hacer el cambio
-    for _, elements in pairs(data.raw) do
-        for _, element in pairs(elements) do
-            format(element)
-        end
-    end
-
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-end
 
 --- Cambiar los orders de los elementos
 function This_MOD.change_orders()
