@@ -1,14 +1,14 @@
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 ---> __FUNCTIONS__.lua <---
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 
 
 
 
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 ---> Valiación <---
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 --- Validar si se cargó antes
 if GMOD.copy then return end
@@ -17,22 +17,22 @@ if GMOD.copy then return end
 _G.log = _G.log or function(...) end
 _G.settings = _G.settings or {}
 
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 
 
 
 
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 ---> Funciones globales <---
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 --- Obtiener información del nombre de la carpeta
 --- that_mod.id
 --- that_mod.name
 --- that_mod.prefix
 function GMOD.get_id_and_name(value)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     if type(value) ~= "nil" then
         if type(value) ~= "string" then
@@ -51,25 +51,25 @@ function GMOD.get_id_and_name(value)
         if not value then return end
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
 
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Separa de la cadena dada los IDs y el resto del nombre
     --- @param full_name string
     --- @return string|nil # IDs encontrados como lista
     --- @return string|nil # Nombre sin los IDs ni el prefijo
     local function get_id_and_name(full_name)
-        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- Contenedor del nombre en partes
         local Parts = {}
 
-        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         -- Dividir en partes separadas por guiones
         for segment in string.gmatch(full_name, "[^%-]+") do
@@ -78,7 +78,7 @@ function GMOD.get_id_and_name(value)
             end
         end
 
-        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         -- Extraer los IDs válidos
         local IDs, Rest_parts = {}, {}
@@ -90,7 +90,7 @@ function GMOD.get_id_and_name(value)
             end
         end
 
-        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- No hay IDs
         if #IDs ~= 0 then return end
@@ -104,16 +104,16 @@ function GMOD.get_id_and_name(value)
         --- Devolver IDs y resto del nombre
         return IDs[1], Rest
 
-        --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
 
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Dividir el nombre por guiones
     local IDs, Name = get_id_and_name(value)
@@ -128,10 +128,10 @@ function GMOD.get_id_and_name(value)
     Output.prefix = GMOD.name .. "-" .. IDs .. "-"
     return Output
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 --- Devuelve el elemento cuyo key y value se igual al dado
 --- @param array table # Tabla en la cual buscar
@@ -142,19 +142,19 @@ end
 ---- Array con las tablas que contienen el key y value dado
 ---- o nil si no lo encuentra
 function GMOD.get_tables(array, key, value, recursive)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Validación
     if type(array) ~= "table" then return end
     if key == nil and value == nil then return end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Coincidencias encontradas
     local Results = {}
     local Added_results = {}
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Buscar las coincidencia
     local function Search(tbl)
@@ -201,7 +201,7 @@ function GMOD.get_tables(array, key, value, recursive)
         end
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Iniciar la busqueda
     for _, v in pairs(array) do
@@ -210,12 +210,12 @@ function GMOD.get_tables(array, key, value, recursive)
         end
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Devolver el resultado
     return #Results > 0 and Results or nil
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
 --- Contar los elementos en la tabla
@@ -225,14 +225,14 @@ end
 ---- Conteo de los elementos de la tabla
 ---- o nil si la tabla esta vacia
 function GMOD.get_length(array)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Valdación
     if type(array) ~= "table" then
         return
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Variable de salida
     local Output = 0
@@ -245,7 +245,7 @@ function GMOD.get_length(array)
     --- Devolver el resultado
     return Output > 0 and Output or nil
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
 --- Devuelve el key que le corresponde al valor dado
@@ -255,13 +255,13 @@ end
 ---- __integer:__ Posición de la primera coincidencia con el valor
 ---- __nil:__ El valor dado no es valido
 function GMOD.get_key(array, value)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Valdación
     if type(array) ~= "table" then return end
     if type(value) == "nil" then return end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Buscar el valor
     for Key, Value in pairs(array) do
@@ -270,19 +270,19 @@ function GMOD.get_key(array, value)
         end
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
 --- Cuenta la cantidad de caracteres en el valor dado
 --- @param value integer # __Ejemplo:__ _123_
 --- @return any # __Ejemplo:__ _3_
 function GMOD.digit_count(value)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     if type(value) ~= "number" then return end
     return string.len(tostring(value))
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
 --- Agrega ceros a la izquierda hasta completar los digitos
@@ -290,29 +290,29 @@ end
 --- @param value integer # __Ejemplo:__ _123_
 --- @return string # __Ejemplo:__ _00123_
 function GMOD.pad_left_zeros(digits, value)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     if type(digits) ~= "number" then return "" end
     if type(value) ~= "number" then return "" end
     return string.format("%0" .. digits .. "d", value)
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 --- Copia cada tabla se copia siempre, sin compartir referencias
 --- @param value any
 --- @return any
 function GMOD.copy(value)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Valdación
     if type(value) ~= "table" then
         return value
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Variable de salida
     local Copy = {}
@@ -324,30 +324,30 @@ function GMOD.copy(value)
         Copy[New_key] = New_val
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Devolver la copia
     return Copy
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
 --- Muestra información detallada de las variables dadas
 --- @param ... any
 function GMOD.var_dump(...)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Renombrar los parametros dados
     local Args = { ... }
     if #Args == 0 then return end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
 
 
-    --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Convierte una variable a string legible
     --- @param value any
@@ -355,24 +355,24 @@ function GMOD.var_dump(...)
     --- @param seen table<table, string>  -- Guarda referencias ya vistas y sus rutas
     --- @param path string
     local function to_string(value, indent, seen, path)
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         ---> Variables a usar
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         indent = indent or ""
         seen = seen or {}
         path = path or "<root>"
 
         local Type = type(value)
 
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
 
 
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         ---> Timpo de valor simple
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         if Type == "string" then
             if string.find(value, "\n") then
@@ -405,15 +405,15 @@ function GMOD.var_dump(...)
             return '"<unknown>"'
         end
 
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
 
 
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         ---> Tablas
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- Evitar referencias circular
         if seen[value] then
@@ -435,7 +435,7 @@ function GMOD.var_dump(...)
             table.insert(Items, Val_str)
         end
 
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- Permite reutilizar la tabla en otras ramas sin error
         seen[value] = nil
@@ -448,16 +448,16 @@ function GMOD.var_dump(...)
         --- Devolver el resultado
         return "{" .. table.concat(Items, ",") .. "\n" .. indent .. "}"
 
-        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
 
 
-    --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Contendor del texto de salida
     local Output = {}
@@ -472,7 +472,7 @@ function GMOD.var_dump(...)
     ---> Mostrar el resultado
     log("\n>>>\n" .. table.concat(Output, "\n") .. "\n<<<")
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
