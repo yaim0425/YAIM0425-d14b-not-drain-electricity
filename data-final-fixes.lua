@@ -39,11 +39,13 @@ require("__FUNCTIONS__")
 --- @param entity table
 --- @return any
 function GMOD.get_item_create_entity(entity)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Validación
     if not entity.minable then return end
     if not entity.minable.results then return end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Buscar el objeto
     for _, result in pairs(entity.minable.results) do
@@ -55,7 +57,7 @@ function GMOD.get_item_create_entity(entity)
         end
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
 --- Devuelve la tecnología que desbloquea una o varias recetas
