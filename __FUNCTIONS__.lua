@@ -279,7 +279,7 @@ end
 function GMOD.digit_count(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-    if not GMOD.is_number(value) then return end
+    if type(value) ~= "number" then return end
     return string.len(tostring(value))
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
