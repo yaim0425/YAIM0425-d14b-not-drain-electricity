@@ -162,11 +162,13 @@ function This_MOD.change_orders()
     local Source = {}
     local N = 0
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
     ---> Grupos
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -200,11 +202,13 @@ function This_MOD.change_orders()
         end
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
     ---> Subgrupos
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -263,15 +267,12 @@ function This_MOD.change_orders()
     --- Crear el Subgrupos por defecto
     data:extend({ Empty })
 
-    --- Inicializar las vaiables
-    Orders = {}
-    Source = {}
-    Source.items = GMOD.items
-    Source.fluids = GMOD.fluids
-    Source.recipes = GMOD.recipes
-
     --- Objetos, recetas y fluidos
-    for Key, Values in pairs(Source) do
+    for Key, Values in pairs({
+        items = GMOD.items,
+        fluids = GMOD.fluids,
+        recipes = GMOD.recipes
+    }) do
         if Key ~= "recipes" then Values = { Values } end
         for _, values in ipairs(Values) do
             for _, value in pairs(values) do
@@ -286,11 +287,13 @@ function This_MOD.change_orders()
         end
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
     ---> Objetos, recetas y demás
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -312,10 +315,11 @@ function This_MOD.change_orders()
                 if not element.subgroup then break end
                 if not element.order then break end
 
-                --- Agrupar
+                --- Elementos a agrupar
                 Source[element.subgroup] = Source[element.subgroup] or {}
                 table.insert(Source[element.subgroup], element)
 
+                --- Elementos a ordenar
                 Orders[element.subgroup] = Orders[element.subgroup] or {}
                 table.insert(Orders[element.subgroup], element.order)
             until true
@@ -343,11 +347,13 @@ function This_MOD.change_orders()
         end
     end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- ---
     ---> Agrupar las recetas
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
