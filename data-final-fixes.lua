@@ -59,6 +59,53 @@ end
 
 
 ---------------------------------------------------------------------------------------------------
+---> Acciones <---
+---------------------------------------------------------------------------------------------------
+
+--- Darle formato a la propiedad "minable"
+function This_MOD.format_minable()
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Hacer el cambio
+    --- @param element table
+    local function Format(element)
+        --- Validar
+        local minable = element.minable
+        if not minable then return end
+        if not minable.result then return end
+
+        --- Dar el formato deseado
+        minable.results = { {
+            type = "item",
+            name = minable.result,
+            amount = minable.count or 1
+        } }
+
+        --- Borrar los valores reubicados
+        minable.result = nil
+        minable.count = nil
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Hacer el cambio
+    for _, elements in pairs(data.raw) do
+        for _, element in pairs(elements) do
+            Format(element)
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
+
+---------------------------------------------------------------------------------------------------
+
+
+
+
+
+---------------------------------------------------------------------------------------------------
 
 --- Iniciar el MOD
 This_MOD.start()
