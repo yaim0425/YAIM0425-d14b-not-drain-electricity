@@ -213,6 +213,7 @@ function GMOD.get_technology(value)
     end
 
     local Ingredient_techs = find_techs_for_recipes(Ingredient_recipes)
+
     if next(Ingredient_techs) then
         local Key = next(Ingredient_techs)
         local Selected = Ingredient_techs[Key]
