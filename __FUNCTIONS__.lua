@@ -15,12 +15,6 @@ if GMOD.copy then return end
 
 ---------------------------------------------------------------------------
 
---- Para que Visual Studio Code no moleste
-_G.log = _G.log or function(...) end
-_G.settings = _G.settings or {}
-
----------------------------------------------------------------------------
-
 
 
 

@@ -52,6 +52,11 @@ GMOD.name = "YAIM0425"
 --- Validación
 if not (data and data.raw) then return end
 
+--- Para que Visual Studio Code no moleste
+_G.log = _G.log or function(...) end
+_G.settings = _G.settings or {}
+_G.defines = _G.defines or {}
+
 --- Subgrupos existentes, se usa con frecuencia
 GMOD.subgroups = data.raw["item-subgroup"]
 
