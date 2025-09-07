@@ -412,9 +412,13 @@ function This_MOD.format_minable()
     --- Hacer el cambio
     --- @param element table
     local function Format(element)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         --- Validar
         if not element.minable then return end
         if not element.minable.result then return end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- Dar el formato deseado
         element.minable.results = { {
@@ -423,9 +427,13 @@ function This_MOD.format_minable()
             amount = element.minable.count or 1
         } }
 
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         --- Borrar los valores reubicados
         element.minable.result = nil
         element.minable.count = nil
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
