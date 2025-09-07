@@ -152,6 +152,223 @@ function This_MOD.format_icons()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Crear espacios entre los elementos
+function This_MOD.change_orders()
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Inicializar las vaiables
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    local Orders = {}
+    local Source = {}
+    local N = 0
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Grupos
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Inicializar las vaiables
+    Orders = {}
+    Source = {}
+
+    --- Agrupar los Grupos
+    for _, element in pairs(data.raw["item-group"]) do
+        if element.order then
+            table.insert(Source, element)
+            table.insert(Orders, element.order)
+        end
+    end
+
+    --- Cantidad de afectados
+    N = GMOD.get_length(data.raw["item-group"])
+    N = GMOD.digit_count(N) + 1
+
+    --- Ordenear los orders
+    table.sort(Orders)
+
+    --- Cambiar el order de los subgrupos
+    for iKey, order in pairs(Orders) do
+        for jKey, element in pairs(Source) do
+            if element.order == order then
+                element.order = GMOD.pad_left_zeros(N, iKey) .. "0"
+                table.remove(Source, jKey)
+                break
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Subgrupos
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Inicializar las vaiables
+    Orders = {}
+    Source = {}
+
+    --- Agrupar los subgroups
+    for _, element in pairs(GMOD.subgroups) do
+        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        Source[element.group] = Source[element.group] or {}
+        table.insert(Source[element.group], element)
+        --- --- --- --- --- --- --- --- --- --- --- --- ---
+        Orders[element.group] = Orders[element.group] or {}
+        table.insert(Orders[element.group], element.order or element.name)
+        --- --- --- --- --- --- --- --- --- --- --- --- ---
+    end
+
+    --- Cambiar el order de los subgrupos
+    for subgroup, orders in pairs(Orders) do
+        --- Ordenear los orders
+        table.sort(orders)
+
+        --- Cantidad de afectados
+        N = GMOD.get_length(orders)
+        N = GMOD.digit_count(N) + 1
+
+        --- Remplazar los orders
+        for iKey, order in pairs(orders) do
+            for jKey, element in pairs(Source[subgroup]) do
+                if element.order == order then
+                    element.order = GMOD.pad_left_zeros(N, iKey) .. "0"
+                    table.remove(Source[subgroup], jKey)
+                    break
+                end
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Establecer subgrupos por defecto
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Subgrupos por defecto
+    local Empty = {
+        type = "item-subgroup",
+        name = "subgroup-empty",
+        group = "other",
+        order = "999"
+    }
+
+    --- Crear el Subgrupos por defecto
+    data:extend({ Empty })
+
+    --- Inicializar las vaiables
+    Orders = {}
+    Source = {}
+    Source.items = GMOD.items
+    Source.fluids = GMOD.fluids
+    Source.recipes = GMOD.recipes
+
+    --- Objetos, recetas y fluidos
+    for Key, Values in pairs(Source) do
+        if Key ~= "recipes" then Values = { Values } end
+        for _, values in ipairs(Values) do
+            for _, value in pairs(values) do
+                if not value.subgroup then
+                    value.subgroup = Empty.name
+                    value.order = value.name
+                end
+                if not value.order then
+                    value.order = value.name
+                end
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Objetos, recetas y demás
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Inicializar las vaiables
+    Orders = {}
+    Source = {}
+
+    --- Agrupar	los objetos, recetas y demás
+    for _, elements in pairs(data.raw) do
+        for _, element in pairs(elements) do
+            --- Evitar estos tipos
+            if element.type == "item-group" then break end
+            if element.type == "item-subgroup" then break end
+
+            --- El ciclo es solo para saltar
+            --- elementos no deseados
+            repeat
+                --- Validación
+                if not element.subgroup then break end
+                if not element.order then break end
+
+                --- Agrupar
+                Source[element.subgroup] = Source[element.subgroup] or {}
+                table.insert(Source[element.subgroup], element)
+
+                Orders[element.subgroup] = Orders[element.subgroup] or {}
+                table.insert(Orders[element.subgroup], element.order)
+            until true
+        end
+    end
+
+    --- Cambiar el order de los subgrupos
+    for subgroup, orders in pairs(Orders) do
+        --- Ordenear los orders
+        table.sort(orders)
+
+        --- Cantidad de afectados
+        N = GMOD.get_length(orders)
+        N = GMOD.digit_count(N) + 1
+
+        --- Remplazar los orders
+        for iKey, order in pairs(orders) do
+            for jKey, element in pairs(Source[subgroup]) do
+                if element.order == order then
+                    element.order = GMOD.pad_left_zeros(N, iKey) .. "0"
+                    table.remove(Source[subgroup], jKey)
+                    break
+                end
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    ---> Agrupar las recetas
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    for name, recipes in pairs(GMOD.recipes) do
+        local item = GMOD.items[name]
+        if item then
+            item.order = item.order or "0"
+            local order = tonumber(item.order) or 0
+            for _, recipe in pairs(recipes) do
+                if #recipe.results == 1 then
+                    recipe.subgroup = item.subgroup
+                    recipe.order = GMOD.pad_left_zeros(#item.order, order)
+                    order = order + 1
+                end
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------------------------------
 
 --- Clasificar la información de data.raw
