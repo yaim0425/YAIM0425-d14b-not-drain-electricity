@@ -95,7 +95,7 @@ function GMOD.get_id_and_name(value)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- No hay IDs
-        if #IDs ~= 0 then return end
+        if #IDs == 0 then return end
 
         --- El MOD no tiene nombre
         local Rest = nil
