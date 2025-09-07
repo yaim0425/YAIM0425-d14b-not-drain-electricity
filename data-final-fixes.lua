@@ -52,16 +52,6 @@ GMOD[This_MOD.id] = This_MOD
 function This_MOD.start()
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-    --- Darle formato a las propiedades
-    This_MOD.format_minable()
-    This_MOD.format_icons()
-
-    --- Cambiar los orders de los elementos
-    This_MOD.change_orders()
-
-    --- Establecer traducción en todos los elementos
-    This_MOD.set_localised()
-
     --- Clasificar la información de data.raw
     --- GMOD.items
     --- GMOD.tiles
@@ -74,6 +64,16 @@ function This_MOD.start()
     --- Clasificar la información de settings.startup
     --- GMOD.Setting
     This_MOD.load_setting()
+
+    --- Darle formato a las propiedades
+    This_MOD.format_minable()
+    This_MOD.format_icons()
+
+    --- Cambiar los orders de los elementos
+    This_MOD.change_orders()
+
+    --- Establecer traducción en todos los elementos
+    This_MOD.set_localised()
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
