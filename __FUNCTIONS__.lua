@@ -273,6 +273,18 @@ function GMOD.get_key(array, value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Cuenta la cantidad de caracteres en el valor dado
+--- @param value integer # __Ejemplo:__ _123_
+--- @return any # __Ejemplo:__ _3_
+function GMOD.digit_count(value)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    if not GMOD.is_number(value) then return end
+    return string.len(tostring(value))
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------------------------------
 
 --- Copia cada tabla se copia siempre, sin compartir referencias
