@@ -59,6 +59,9 @@ function This_MOD.start()
     --- Cambiar los orders de los elementos
     This_MOD.change_orders()
 
+    --- Establecer traducción en todos los elementos
+    This_MOD.set_localised()
+
     --- Clasificar la información de data.raw
     --- GMOD.items
     --- GMOD.tiles
