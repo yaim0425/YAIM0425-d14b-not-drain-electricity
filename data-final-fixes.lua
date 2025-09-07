@@ -54,6 +54,7 @@ function This_MOD.start()
 
     --- Darle formato a las propiedades
     This_MOD.format_minable()
+    This_MOD.format_icons()
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
