@@ -65,6 +65,10 @@ function This_MOD.start()
     ---- GMOD.equipments
     This_MOD.filter_data()
 
+    --- Clasificar la información de settings.startup
+    ---- GMOD.Setting
+    This_MOD.load_setting()
+
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
