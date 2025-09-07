@@ -223,6 +223,138 @@ function GMOD.get_technology(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Cargar los prototipos al juego
+--- @param ... any
+function GMOD.extend(...)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Renombrar los parametros dados
+    local Prototypes = { ... }
+    if #Prototypes == 0 then return end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Clasificar y guardar el prototipo
+    local function extend(prototype)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        ---> Recipes
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        while true do
+            if prototype.type ~= "recipe" then break end
+
+            GMOD.recipes[prototype.name] = GMOD.recipes[prototype.name] or {}
+            table.insert(GMOD.recipes[prototype.name], prototype)
+            prototype.enabled = true
+            return
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        ---> Fluids
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        while true do
+            if prototype.type ~= "fluid" then break end
+
+            GMOD.fluids[prototype.name] = prototype
+            return
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        ---> Items
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        while true do
+            if not prototype.stack_size then break end
+
+            GMOD.items[prototype.name] = prototype
+            return
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        ---> Tiles
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        while true do
+            if prototype.type ~= "tile" then break end
+            if not prototype.minable then break end
+            if not prototype.minable.results then break end
+
+            for _, result in pairs(prototype.minable.results) do
+                GMOD.tiles[result.name] = GMOD.tiles[result.name] or {}
+                table.insert(GMOD.tiles[result.name], prototype)
+            end
+            return
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        ---> Equipments
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        while true do
+            if not prototype.shape then break end
+
+            GMOD.equipments[prototype.name] = prototype
+            return
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        ---> Entities
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        while true do
+            if not prototype.minable then break end
+            if not prototype.minable.results then break end
+
+            for _, Result in pairs(prototype.minable.results) do
+                GMOD.entities[Result.name] = prototype
+            end
+            return
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Guardar el nuevo prototipo
+    for _, arg in pairs(Prototypes) do
+        extend(arg)
+        data:extend({ arg })
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------
 
 
