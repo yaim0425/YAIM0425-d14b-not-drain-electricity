@@ -57,16 +57,16 @@ function This_MOD.start()
     This_MOD.format_icons()
 
     --- Clasificar la información de data.raw
-    ---- GMOD.items
-    ---- GMOD.tiles
-    ---- GMOD.fluids
-    ---- GMOD.recipes
-    ---- GMOD.entities
-    ---- GMOD.equipments
+    --- GMOD.items
+    --- GMOD.tiles
+    --- GMOD.fluids
+    --- GMOD.recipes
+    --- GMOD.entities
+    --- GMOD.equipments
     This_MOD.filter_data()
 
     --- Clasificar la información de settings.startup
-    ---- GMOD.Setting
+    --- GMOD.Setting
     This_MOD.load_setting()
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -155,12 +155,12 @@ end
 ---------------------------------------------------------------------------------------------------
 
 --- Clasificar la información de data.raw
----- GMOD.items
----- GMOD.tiles
----- GMOD.fluids
----- GMOD.recipes
----- GMOD.entities
----- GMOD.equipments
+--- GMOD.items
+--- GMOD.tiles
+--- GMOD.fluids
+--- GMOD.recipes
+--- GMOD.entities
+--- GMOD.equipments
 function This_MOD.filter_data()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     ---> Contenedores finales
@@ -449,7 +449,7 @@ function This_MOD.filter_data()
 end
 
 --- Clasificar la información de settings.startup
----- GMOD.Setting
+--- GMOD.Setting
 function This_MOD.load_setting()
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
