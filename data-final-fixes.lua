@@ -225,6 +225,19 @@ function GMOD.get_technology(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Elimina el indicador del nombre dado
+--- @param name string # __Ejemplo:__ prefix-i0MOD00-i0MOD20-name
+--- @return string # __Ejemplo:__ #
+---- __name,__ si se cumple el patron
+---- o el nombre dado si no es así
+function GMOD.delete_prefix(name)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    return name:gsub(GMOD.name .. "%-", "") or name
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 --- Cargar los prototipos al juego
 --- @param ... any
 function GMOD.extend(...)
