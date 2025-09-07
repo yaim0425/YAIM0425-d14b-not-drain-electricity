@@ -95,27 +95,45 @@ function GMOD.get_technology(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     local function compare(old, new, expensive)
-        if (not expensive and old.level > new.level)
-            or (expensive and old.level < new.level) then
-            return new
-        elseif old.level == new.level then
-            local Old_unit = old.unit
-            local New_unit = new.unit
-            local Old_ingredients = Old_unit and #Old_unit.ingredients or 0
-            local New_ingredients = New_unit and #New_unit.ingredients or 0
-            if (not expensive and Old_ingredients > New_ingredients)
-                or (expensive and Old_ingredients < New_ingredients) then
-                return new
-            elseif Old_ingredients == New_ingredients then
-                local Old_count = Old_unit and Old_unit.count or 0
-                local New_count = New_unit and New_unit.count or 0
-                if (not expensive and Old_count > New_count)
-                    or (expensive and Old_count < New_count) then
-                    return new
-                end
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        if not old then return new end
+        if not new then return old end
+
+        local Old_unit = old.unit or {}
+        local New_unit = new.unit or {}
+
+        local Old_count = Old_unit.count or (Old_unit.count_formula and math.huge) or 0
+        local New_count = New_unit.count or (New_unit.count_formula and math.huge) or 0
+
+        local Old_ingredients = Old_unit.ingredients and #Old_unit.ingredients or 0
+        local New_ingredients = New_unit.ingredients and #New_unit.ingredients or 0
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        -- Si buscamos la más barata
+        if not expensive then
+            if Old_ingredients ~= New_ingredients then
+                return (Old_ingredients > New_ingredients) and new or old
+            elseif Old_count ~= New_count then
+                return (Old_count > New_count) and new or old
+            else
+                return (new.name < old.name) and new or old -- desempate por nombre
             end
         end
-        return old
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        -- Si buscamos la más cara
+        if Old_ingredients ~= New_ingredients then
+            return (Old_ingredients < New_ingredients) and new or old
+        elseif Old_count ~= New_count then
+            return (Old_count < New_count) and new or old
+        else
+            return (new.name > old.name) and new or old -- desempate por nombre
+        end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -129,6 +147,8 @@ function GMOD.get_technology(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     local function find_techs_for_recipes(recipes)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         local Techs = {}
         for _, tech in pairs(data.raw.technology) do
             if tech.effects then
@@ -144,6 +164,8 @@ function GMOD.get_technology(value)
             end
         end
         return Techs
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
