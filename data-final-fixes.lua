@@ -726,13 +726,13 @@ function This_MOD.set_localised()
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Establecer la traducción
-    for type, subgroup in pairs({
+    for name, subgroup in pairs({
         tile = GMOD.tiles,
         fluid = GMOD.fluids,
         entity = GMOD.entities,
         equipment = GMOD.equipments
     }) do
-        if type ~= "tile" then subgroup = { subgroup } end
+        if name ~= "tile" then subgroup = { subgroup } end
         for _, elements in pairs(subgroup) do
             for _, element in pairs(elements) do
                 if element.localised_name then
@@ -741,10 +741,10 @@ function This_MOD.set_localised()
                     end
                 end
                 if not element.localised_name then
-                    element.localised_name = { "", { type .. "-name." .. element.name } }
+                    element.localised_name = { "", { name .. "-name." .. element.name } }
                 end
                 if not element.localised_description then
-                    element.localised_description = { "", { type .. "-description." .. element.name } }
+                    element.localised_description = { "", { name .. "-description." .. element.name } }
                 end
             end
         end
