@@ -455,9 +455,13 @@ function This_MOD.format_icons()
     --- Hacer el cambio
     --- @param element table
     local function Format(element)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         --- Validar
         if element.icons then return end
         if not element.icon then return end
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- Dar el formato deseado
         element.icons = { {
@@ -465,9 +469,13 @@ function This_MOD.format_icons()
             icon_size = element.icon_size ~= 64 and element.icon_size or nil
         } }
 
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         --- Borrar los valores reubicados
         element.icon_size = nil
         element.icon = nil
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
