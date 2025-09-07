@@ -361,19 +361,17 @@ function This_MOD.filter_data()
     --- Identificar valores vacios
     for iKey, elemnts in pairs(Array) do
         for jKey, elemnt in pairs(elemnts) do
-            if GMOD.is_boolean(elemnt) then
+            if type(elemnt) == "boolean" then
                 Info = Info .. "\n\t\t"
                 Info = Info .. iKey .. " not found or hidden: " .. jKey
-                table.insert(Delete, jKey)
+                table.insert(Delete, { elemnts, jKey })
             end
         end
     end
 
     --- Eliminar valores vacios
-    for _, list in pairs(Array) do
-        for _, value in pairs(Delete) do
-            list[value] = nil
-        end
+    for _, value in pairs(Delete) do
+        value[1][value[2]] = nil
     end
 
     --- Imprimir un informe de lo eliminados
