@@ -32,6 +32,39 @@ require("__FUNCTIONS__")
 
 
 ---------------------------------------------------------------------------
+---> Funciones globales <---
+---------------------------------------------------------------------------
+
+--- Obtiene el objeto que crea la entidad dada
+--- @param entity table
+--- @return any
+function GMOD.get_item_create_entity(entity)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Validación
+    if not entity.minable then return end
+    if not entity.minable.results then return end
+
+    --- Buscar el objeto
+    for _, result in pairs(entity.minable.results) do
+        if result.type == "item" then
+            local Item = GMOD.items[result.name]
+            if Item.place_result == entity.name then
+                return Item
+            end
+        end
+    end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
+---------------------------------------------------------------------------
+
+
+
+
+
+---------------------------------------------------------------------------
 ---> Contenedor de este archivo <---
 ---------------------------------------------------------------------------
 
