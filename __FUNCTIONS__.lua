@@ -360,6 +360,7 @@ function GMOD.var_dump(...)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         ---> Variables a usar
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         indent = indent or ""
         seen = seen or {}
         path = path or "<root>"
