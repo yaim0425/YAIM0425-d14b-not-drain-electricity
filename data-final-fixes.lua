@@ -56,6 +56,9 @@ function This_MOD.start()
     This_MOD.format_minable()
     This_MOD.format_icons()
 
+    --- Cambiar los orders de los elementos
+    This_MOD.change_orders()
+
     --- Clasificar la información de data.raw
     --- GMOD.items
     --- GMOD.tiles
