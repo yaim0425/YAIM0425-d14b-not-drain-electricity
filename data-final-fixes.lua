@@ -56,6 +56,13 @@ function This_MOD.start()
     This_MOD.format_minable()
     This_MOD.format_icons()
 
+    --- Clasificar la información de data.raw
+    ---- GMOD.items
+    ---- GMOD.tiles
+    ---- GMOD.fluids
+    ---- GMOD.recipes
+    ---- GMOD.entities
+    ---- GMOD.equipments
     This_MOD.filter_data()
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
