@@ -56,6 +56,8 @@ function This_MOD.start()
     This_MOD.format_minable()
     This_MOD.format_icons()
 
+    This_MOD.filter_data()
+
     --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
