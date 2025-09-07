@@ -147,6 +147,7 @@ function This_MOD.format_icons()
         --- Validar
         if element.icons then return end
         if not element.icon then return end
+        if type(element.icon) ~= "string" then return end
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
