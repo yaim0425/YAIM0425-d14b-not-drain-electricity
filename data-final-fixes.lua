@@ -454,7 +454,7 @@ function This_MOD.format_icons()
 
     --- Hacer el cambio
     --- @param element table
-    local function Format(element)
+    local function format(element)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- Validar
@@ -483,7 +483,7 @@ function This_MOD.format_icons()
     --- Hacer el cambio
     for _, elements in pairs(data.raw) do
         for _, element in pairs(elements) do
-            Format(element)
+            format(element)
         end
     end
 
