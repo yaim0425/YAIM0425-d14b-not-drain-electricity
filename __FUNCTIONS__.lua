@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
----> __FUNCTIONS__.lua <---
+---[ __FUNCTIONS__.lua ]---
 ---------------------------------------------------------------------------
 
 
@@ -7,7 +7,7 @@
 
 
 ---------------------------------------------------------------------------
----> Valiación <---
+---[ Valiación ]---
 ---------------------------------------------------------------------------
 
 --- Validar si se cargó antes
@@ -20,7 +20,7 @@ if GMOD.copy then return end
 
 
 ---------------------------------------------------------------------------
----> Funciones globales <---
+---[ Funciones globales ]---
 ---------------------------------------------------------------------------
 
 --- Obtiener información del nombre de la carpeta
@@ -352,7 +352,7 @@ function GMOD.var_dump(...)
     --- @param path string
     local function to_string(value, indent, seen, path)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Variables a usar
+        ---[ Variables a usar
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         indent = indent or ""
@@ -368,7 +368,7 @@ function GMOD.var_dump(...)
 
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Timpo de valor simple
+        ---[ Timpo de valor simple
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         if Type == "string" then
@@ -409,7 +409,7 @@ function GMOD.var_dump(...)
 
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Tablas
+        ---[ Tablas
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- Evitar referencias circular
@@ -466,7 +466,7 @@ function GMOD.var_dump(...)
         table.insert(Output, Result)
     end
 
-    ---> Mostrar el resultado
+    ---[ Mostrar el resultado
     log("\n>>>\n" .. table.concat(Output, "\n") .. "\n<<<")
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---

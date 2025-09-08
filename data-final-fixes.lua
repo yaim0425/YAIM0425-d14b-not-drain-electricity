@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------
----> data-final-fixes.lua <---
+---[ data-final-fixes.lua ]---
 ---------------------------------------------------------------------------
 
 
@@ -7,7 +7,7 @@
 
 
 ---------------------------------------------------------------------------
----> Validar si se cargó antes <---
+---[ Validar si se cargó antes ]---
 ---------------------------------------------------------------------------
 
 if GMOD and GMOD.name then return end
@@ -19,7 +19,7 @@ if GMOD and GMOD.name then return end
 
 
 ---------------------------------------------------------------------------
----> Cargar las funciones y constantes <---
+---[ Cargar las funciones y constantes ]---
 ---------------------------------------------------------------------------
 
 require("__CONSTANTS__")
@@ -32,7 +32,7 @@ require("__FUNCTIONS__")
 
 
 ---------------------------------------------------------------------------
----> Funciones globales <---
+---[ Funciones globales ]---
 ---------------------------------------------------------------------------
 
 --- Obtiene el objeto que crea la entidad dada
@@ -65,11 +65,13 @@ end
 --- @return table|nil # Tecnología que desbloquea la receta o recetas
 function GMOD.get_technology(value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Lista de nombres de recetas
+    --- Lista de nombres de recetas
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+    --- Validación
     if type(value) == "nil" then return end
 
+    --- Enlistar las recetas
     local Recipe_list = {}
     if type(value) == "string" then
         table.insert(Recipe_list, value)
@@ -84,6 +86,8 @@ function GMOD.get_technology(value)
             end
         end
     end
+
+    --- Validación
     if #Recipe_list == 0 then return end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -93,7 +97,7 @@ function GMOD.get_technology(value)
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Función auxiliar para comparar dos tecnologías
+    --- Función auxiliar para comparar dos tecnologías
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     local function compare(old, new, expensive)
@@ -145,7 +149,7 @@ function GMOD.get_technology(value)
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Buscar tecnologías que desbloquean las recetas
+    --- Buscar tecnologías que desbloquean las recetas
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     local function find_techs_for_recipes(recipes)
@@ -177,7 +181,7 @@ function GMOD.get_technology(value)
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Buscar tecnologías directas
+    --- Buscar tecnologías directas
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     local Recipe_techs = find_techs_for_recipes(Recipe_list)
@@ -198,7 +202,7 @@ function GMOD.get_technology(value)
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Si no hay directas, buscar por los ingredientes
+    --- Si no hay directas, buscar por los ingredientes
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     local Ingredient_recipes = {}
@@ -253,7 +257,7 @@ function GMOD.extend(...)
     --- Clasificar y guardar el prototipo
     local function extend(prototype)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Recipes
+        ---[ Recipes
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         while true do
             if prototype.type ~= "recipe" then break end
@@ -271,7 +275,7 @@ function GMOD.extend(...)
 
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Fluids
+        ---[ Fluids
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         while true do
@@ -288,7 +292,7 @@ function GMOD.extend(...)
 
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Items
+        ---[ Items
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         while true do
@@ -305,7 +309,7 @@ function GMOD.extend(...)
 
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Tiles
+        ---[ Tiles
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         while true do
@@ -327,7 +331,7 @@ function GMOD.extend(...)
 
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Equipments
+        ---[ Equipments
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         while true do
@@ -344,7 +348,7 @@ function GMOD.extend(...)
 
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-        ---> Entities
+        ---[ Entities
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         while true do
@@ -378,7 +382,7 @@ end
 
 
 ---------------------------------------------------------------------------
----> Contenedor de este archivo <---
+---[ Contenedor de este archivo ]---
 ---------------------------------------------------------------------------
 
 local This_MOD = GMOD.get_id_and_name()
@@ -392,7 +396,7 @@ GMOD[This_MOD.id] = This_MOD
 
 
 ---------------------------------------------------------------------------
----> Inicio del MOD <---
+---[ Inicio del MOD ]---
 ---------------------------------------------------------------------------
 
 function This_MOD.start()
@@ -435,7 +439,7 @@ end
 
 
 ---------------------------------------------------------------------------
----> Funciones locales <---
+---[ Funciones locales ]---
 ---------------------------------------------------------------------------
 
 --- Darle formato a la propiedad "minable"
@@ -535,7 +539,7 @@ end
 --- GMOD.equipments
 function This_MOD.filter_data()
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Contenedores finales
+    ---[ Contenedores finales
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     GMOD.items = {}
@@ -550,7 +554,7 @@ function This_MOD.filter_data()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Otras funciones
+    ---[ Otras funciones
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Validar si está oculta
@@ -573,7 +577,7 @@ function This_MOD.filter_data()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Agrega las Recetas, Suelos y Objetos
+    ---[ Agrega las Recetas, Suelos y Objetos
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Agregar la receta a GMOD.recipes
@@ -689,7 +693,7 @@ function This_MOD.filter_data()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Cargar las Recetas, Suelos, Fluidos y Objetos
+    ---[ Cargar las Recetas, Suelos, Fluidos y Objetos
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Recorrer las recetas
@@ -720,7 +724,7 @@ function This_MOD.filter_data()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Buscar y cargar las Entidades y los Equipos
+    ---[ Buscar y cargar las Entidades y los Equipos
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Evitar estos tipos
@@ -780,7 +784,7 @@ function This_MOD.filter_data()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Eliminar los elementos que no se pudieron cargar
+    ---[ Eliminar los elementos que no se pudieron cargar
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Variable contenedora
@@ -846,7 +850,7 @@ end
 --- Cambiar los orders de los elementos
 function This_MOD.change_orders()
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Inicializar las vaiables
+    ---[ Inicializar las vaiables
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     local Orders = {}
@@ -860,7 +864,7 @@ function This_MOD.change_orders()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Grupos
+    ---[ Grupos
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Inicializar las vaiables
@@ -900,7 +904,7 @@ function This_MOD.change_orders()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Subgrupos
+    ---[ Subgrupos
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Inicializar las vaiables
@@ -944,7 +948,7 @@ function This_MOD.change_orders()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Establecer subgrupos por defecto
+    ---[ Establecer subgrupos por defecto
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Subgrupos por defecto
@@ -985,7 +989,7 @@ function This_MOD.change_orders()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Objetos, recetas y demás
+    ---[ Objetos, recetas y demás
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Inicializar las vaiables
@@ -1045,7 +1049,7 @@ function This_MOD.change_orders()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Agrupar las recetas
+    ---[ Agrupar las recetas
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     for name, recipes in pairs(GMOD.recipes) do
@@ -1069,7 +1073,7 @@ end
 --- Establecer traducción en todos los elementos
 function This_MOD.set_localised()
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Traducir estas secciones
+    ---[ Traducir estas secciones
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Establecer la traducción
@@ -1159,7 +1163,7 @@ function This_MOD.set_localised()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Traducción de los objetos y las recetas
+    ---[ Traducción de los objetos y las recetas
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Establecer la traducción de los objetos
@@ -1219,7 +1223,7 @@ function This_MOD.set_localised()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    ---> Traducción de las tecnologias
+    ---[ Traducción de las tecnologias
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Actualizar el apodo del nombre
