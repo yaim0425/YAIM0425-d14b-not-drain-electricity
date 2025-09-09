@@ -57,7 +57,7 @@ function GMOD.get_id_and_name(value)
 
     --- Separa de la cadena dada los IDs y el resto del nombre
     --- @param full_name string
-    --- @return string|nil # IDs encontrados como lista
+    --- @return table|nil # IDs encontrados como lista
     --- @return string|nil # Nombre sin los IDs ni el prefijo
     local function get_id_and_name(full_name)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -98,7 +98,7 @@ function GMOD.get_id_and_name(value)
         if Rest == "" then return end
 
         --- Devolver IDs y resto del nombre
-        return IDs[1], Rest
+        return IDs, Rest
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     end
@@ -119,9 +119,10 @@ function GMOD.get_id_and_name(value)
 
     --- Información propia del mod
     local Output = {}
-    Output.id = IDs
+    Output.id = IDs[#IDs]
+    Output.ids = "-" .. table.concat(IDs, "-") .. "-"
     Output.name = Name
-    Output.prefix = GMOD.name .. "-" .. IDs .. "-"
+    Output.prefix = GMOD.name .. Output.ids
     return Output
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
