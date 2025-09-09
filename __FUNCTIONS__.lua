@@ -122,7 +122,7 @@ function GMOD.get_id_and_name(value)
     Output.id = IDs[#IDs]
     Output.ids = "-" .. table.concat(IDs, "-") .. "-"
     Output.name = Name
-    Output.prefix = GMOD.name .. Output.ids
+    Output.prefix = GMOD.name .. "-" .. Output.id .. "-"
     return Output
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
