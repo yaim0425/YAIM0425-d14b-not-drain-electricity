@@ -134,11 +134,10 @@ end
 --- @param array table # Tabla en la cual buscar
 --- @param key string|nil # propiedad a buscar
 --- @param value any|nil # Valor a buscar
---- @param recursive boolean # Busqueda recursiva
 --- @return any #
 ---- Array con las tablas que contienen el key y value dado
 ---- o nil si no lo encuentra
-function GMOD.get_tables(array, key, value, recursive)
+function GMOD.get_tables(array, key, value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Validación
@@ -189,11 +188,9 @@ function GMOD.get_tables(array, key, value, recursive)
         end
 
         --- Buscar en las subtablas
-        if recursive then
-            for _, v in pairs(tbl) do
-                if type(v) == "table" then
-                    Search(v)
-                end
+        for _, v in pairs(tbl) do
+            if type(v) == "table" then
+                Search(v)
             end
         end
     end
@@ -201,11 +198,7 @@ function GMOD.get_tables(array, key, value, recursive)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Iniciar la busqueda
-    for _, v in pairs(array) do
-        if type(v) == "table" then
-            Search(v)
-        end
-    end
+    Search(array)
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
