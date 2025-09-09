@@ -596,7 +596,7 @@ function This_MOD.filter_data()
             GMOD.recipes[result.name] = Recipes
 
             --- Agregar la receta si no se encuentra
-            local Found = GMOD.get_tables(Recipes, "name", recipe.name, false)
+            local Found = GMOD.get_key(Recipes, recipe)
             if not Found then table.insert(Recipes, recipe) end
 
             --- Guardar referencia del resultado
@@ -637,7 +637,7 @@ function This_MOD.filter_data()
             GMOD.tiles[result.name] = Titles
 
             --- Agregar el suelo si no se encuentra
-            local Found = GMOD.get_tables(Titles, "name", tile.name, false)
+            local Found = GMOD.get_key(Titles, tile)
             if not Found then table.insert(Titles, tile) end
         end
 
