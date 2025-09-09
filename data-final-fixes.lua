@@ -157,13 +157,11 @@ function GMOD.get_technology(value)
 
         local Techs = {}
         for _, tech in pairs(data.raw.technology) do
-            if tech.effects then
-                for _, effect in pairs(tech.effects) do
-                    if effect.type == "unlock-recipe" then
-                        for _, R in ipairs(recipes) do
-                            if effect.recipe == R then
-                                Techs[tech.name] = tech
-                            end
+            for _, effect in pairs(tech.effects or {}) do
+                if effect.type == "unlock-recipe" then
+                    for _, recipe_name in ipairs(recipes) do
+                        if effect.recipe == recipe_name then
+                            Techs[tech.name] = tech
                         end
                     end
                 end
