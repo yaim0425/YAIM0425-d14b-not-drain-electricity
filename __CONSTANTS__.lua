@@ -50,7 +50,10 @@ GMOD.name = "YAIM0425"
 ---------------------------------------------------------------------------------------------------
 
 --- Validación
-if not (data and data.raw) then return end
+if not data then return end
+if not data.raw then return end
+if not data.raw["item-subgroup"] then return end
+if not data.raw["virtual-signal"] then return end
 
 --- Para que Visual Studio Code no moleste
 _G.log = _G.log or function(...) end
