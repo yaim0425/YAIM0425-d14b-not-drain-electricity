@@ -831,12 +831,12 @@ function This_MOD.load_setting()
     --- Recorrer las opciones de configuración
     for option, value in pairs(settings.startup) do
         --- Separar los datos esperados
-        local ID, Name = GMOD.get_id_and_name(option)
+        local That_MOD = GMOD.get_id_and_name(option)
 
         --- Validar los datos obtenidos
-        if ID and Name then
-            GMOD.setting[ID] = GMOD.setting[ID] or {}
-            GMOD.setting[ID][Name] = value.value
+        if That_MOD then
+            GMOD.setting[That_MOD.id] = GMOD.setting[That_MOD.id] or {}
+            GMOD.setting[That_MOD.id][That_MOD.name] = value.value
         end
     end
 
