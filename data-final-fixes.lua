@@ -761,6 +761,7 @@ function This_MOD.filter_data()
                         --- Entidades
                         if elements == GMOD.entities then
                             if is_hidde(element) then break end
+                            if not element.max_health then break end
                         end
 
                         --- Equipos
