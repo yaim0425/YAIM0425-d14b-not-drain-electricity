@@ -278,7 +278,14 @@ function GMOD.extend(...)
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     --- Clasificar y guardar el prototipo
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
     local function extend(prototype)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         --- Recipes
@@ -338,13 +345,11 @@ function GMOD.extend(...)
 
         while true do
             if prototype.type ~= "tile" then break end
-            if not prototype.minable then break end
-            if not prototype.minable.results then break end
+            local Item = GMOD.get_item_create(prototype, "place_as_tile")
+            if not Item then break end
 
-            for _, result in pairs(prototype.minable.results) do
-                GMOD.tiles[result.name] = GMOD.tiles[result.name] or {}
-                table.insert(GMOD.tiles[result.name], prototype)
-            end
+            GMOD.tiles[Item.name] = GMOD.tiles[Item.name] or {}
+            table.insert(GMOD.tiles[Item.name], prototype)
             return
         end
 
@@ -376,12 +381,12 @@ function GMOD.extend(...)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         while true do
-            if not prototype.minable then break end
-            if not prototype.minable.results then break end
+            if not prototype.max_health then break end
+            if GMOD.is_hidde(prototype) then break end
+            local Item = GMOD.get_item_create(prototype, "place_result")
+            if not Item then break end
 
-            for _, Result in pairs(prototype.minable.results) do
-                GMOD.entities[Result.name] = prototype
-            end
+            GMOD.entities[Item.name] = prototype
             return
         end
 
@@ -390,10 +395,17 @@ function GMOD.extend(...)
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     --- Guardar el nuevo prototipo
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
     for _, arg in pairs(Prototypes) do
-        extend(arg)
         data:extend({ arg })
+        extend(arg)
     end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
