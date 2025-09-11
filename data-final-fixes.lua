@@ -56,7 +56,7 @@ end
 --- Obtiene el objeto que crea la entidad dada
 --- @param element table
 --- @return any
-function GMOD.get_item_create_entity(element, propiety)
+function GMOD.get_item_create(element, propiety)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     --- Validación
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
