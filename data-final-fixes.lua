@@ -540,12 +540,12 @@ function This_MOD.filter_data()
     ---[ Contenedores finales
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-    GMOD.items = {}
-    GMOD.tiles = {}
-    GMOD.fluids = {}
-    GMOD.recipes = {}
     GMOD.entities = {}
     GMOD.equipments = {}
+    GMOD.fluids = {}
+    GMOD.items = {}
+    GMOD.recipes = {}
+    GMOD.tiles = {}
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
