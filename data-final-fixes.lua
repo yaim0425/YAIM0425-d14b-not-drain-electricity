@@ -580,31 +580,6 @@ function This_MOD.filter_data()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    --- Otras funciones
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-    --- Validar si está oculta
-    local function is_hidde(array)
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-        local Hidden = false
-        Hidden = Hidden or array.hidden
-        Hidden = Hidden or array.parameter
-        Hidden = Hidden or GMOD.get_key(array.flags, "hidden")
-        Hidden = Hidden or GMOD.get_key(array.flags, "spawnable")
-        if Hidden then return true end
-        return false
-
-        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    end
-
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
-
-
-
-
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     --- Agrega las Recetas, Suelos y Objetos
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -613,7 +588,7 @@ function This_MOD.filter_data()
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
         --- Vaidación
-        if is_hidde(recipe) then return end
+        if GMOD.is_hidde(recipe) then return end
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -678,7 +653,7 @@ function This_MOD.filter_data()
 
         --- Validación
         if not item.stack_size then return end
-        if is_hidde(item) then return end
+        if GMOD.is_hidde(item) then return end
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -786,7 +761,7 @@ function This_MOD.filter_data()
 
                         --- Entidades
                         if elements == GMOD.entities then
-                            if is_hidde(element) then break end
+                            if GMOD.is_hidde(element) then break end
                             if not element.max_health then break end
                         end
 
