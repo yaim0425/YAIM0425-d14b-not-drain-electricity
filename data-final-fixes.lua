@@ -752,8 +752,7 @@ function This_MOD.filter_data()
 
                         --- Entidades
                         if elements == GMOD.entities then
-                            if not element.minable then break end
-                            if not element.minable.results then break end
+                            if is_hidde(element) then break end
                         end
 
                         --- Equipos
