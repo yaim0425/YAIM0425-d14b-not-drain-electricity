@@ -20,6 +20,25 @@
     "? pyindustry",
     "? pypetroleumhandling",
     "? pypostprocessing",
-    "? pyrawores"
+    "? pyrawores",
+
+    "bobassembly",
+    "bobclasses",
+    "bobelectronics",
+    "bobenemies",
+    "bobequipment",
+    "bobgreenhouse",
+    "bobinserters",
+    "boblibrary",
+    "boblogistics",
+    "bobmining",
+    "bobmodules",
+    "bobores",
+    "bobplates",
+    "bobpower",
+    "bobrevamp",
+    "bobtech",
+    "bobvehicleequipment",
+    "bobwarfare"
   ]
 }
