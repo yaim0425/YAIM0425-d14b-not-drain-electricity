@@ -36,28 +36,36 @@ require("__FUNCTIONS__")
 ---------------------------------------------------------------------------
 
 --- Obtiene el objeto que crea la entidad dada
---- @param entity table
+--- @param element table
 --- @return any
-function GMOD.get_item_create_entity(entity)
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+function GMOD.get_item_create_entity(element, propiety)
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- Validación
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-    --- Validación
-    if not entity.minable then return end
-    if not entity.minable.results then return end
+        if not element.minable then return end
+        if not element.minable.results then return end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-    --- Buscar el objeto
-    for _, result in pairs(entity.minable.results) do
-        if result.type == "item" then
-            local Item = GMOD.items[result.name]
-            if Item.place_result == entity.name then
-                return Item
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- Buscar el objeto
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+        for _, result in pairs(element.minable.results) do
+            if result.type == "item" then
+                local Item = GMOD.items[result.name] or {}
+                if Item[propiety] == element.name then
+                    return Item
+                end
             end
         end
-    end
 
-    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
 --- Devuelve la tecnología que desbloquea una o varias recetas
