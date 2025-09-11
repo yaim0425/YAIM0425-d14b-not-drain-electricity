@@ -35,6 +35,24 @@ require("__FUNCTIONS__")
 ---[ Funciones globales ]---
 ---------------------------------------------------------------------------
 
+--- Validar si está oculta
+--- @param element table
+--- @return boolean
+function GMOD.is_hidde(element)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    --- Validar los valores
+    local Hidden = false
+    Hidden = Hidden or element.hidden
+    Hidden = Hidden or element.parameter
+    Hidden = Hidden or GMOD.get_key(element.flags or {}, "hidden")
+
+    --- Devolver el resultado
+    return Hidden
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 --- Obtiene el objeto que crea la entidad dada
 --- @param element table
 --- @return any
