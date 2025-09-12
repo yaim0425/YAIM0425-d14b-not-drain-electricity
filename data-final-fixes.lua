@@ -546,20 +546,28 @@ end
 --- Darle formato a la propiedad "icons"
 function This_MOD.format_icons()
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
     --- Hacer el cambio
-    --- @param element table
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
     local function format(element)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
         --- Validar
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         if element.icons then return end
         if not element.icon then return end
         if type(element.icon) ~= "string" then return end
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         --- Dar el formato deseado
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         element.icons = { {
             icon = element.icon,
             icon_size = element.icon_size ~= 64 and element.icon_size or nil
@@ -567,7 +575,14 @@ function This_MOD.format_icons()
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         --- Borrar los valores reubicados
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         element.icon_size = nil
         element.icon = nil
 
@@ -576,7 +591,14 @@ function This_MOD.format_icons()
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     --- Hacer el cambio
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
     for _, elements in pairs(data.raw) do
         for _, element in pairs(elements) do
             format(element)
