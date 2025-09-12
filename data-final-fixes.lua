@@ -481,19 +481,27 @@ end
 --- Darle formato a la propiedad "minable"
 function This_MOD.format_minable()
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
     --- Hacer el cambio
-    --- @param element table
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
     local function format(element)
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-
         --- Validar
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         if not element.minable then return end
         if not element.minable.result then return end
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         --- Dar el formato deseado
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         element.minable.results = { {
             type = "item",
             name = element.minable.result,
@@ -502,7 +510,14 @@ function This_MOD.format_minable()
 
         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
+
+
+
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
         --- Borrar los valores reubicados
+        --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
         element.minable.result = nil
         element.minable.count = nil
 
@@ -511,7 +526,14 @@ function This_MOD.format_minable()
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
+
+
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     --- Hacer el cambio
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
     for _, elements in pairs(data.raw) do
         for _, element in pairs(elements) do
             format(element)
