@@ -57,6 +57,7 @@ if not data.raw["virtual-signal"] then return end
 
 --- Para que Visual Studio Code no moleste
 _G.log = _G.log or function(...) end
+_G.prototypes = _G.prototypes or {}
 _G.settings = _G.settings or {}
 _G.defines = _G.defines or {}
 _G.script = _G.script or {}
