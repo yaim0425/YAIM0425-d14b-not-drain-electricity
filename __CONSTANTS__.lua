@@ -62,6 +62,7 @@ _G.settings = _G.settings or {}
 _G.defines = _G.defines or {}
 _G.script = _G.script or {}
 _G.game = _G.game or {}
+_G.mods = _G.mods or {}
 
 --- Subgrupos existentes, se usa con frecuencia
 GMOD.subgroups = data.raw["item-subgroup"]
