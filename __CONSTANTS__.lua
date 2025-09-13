@@ -59,6 +59,8 @@ if not data.raw["virtual-signal"] then return end
 _G.log = _G.log or function(...) end
 _G.settings = _G.settings or {}
 _G.defines = _G.defines or {}
+_G.script = _G.script or {}
+_G.game = _G.game or {}
 
 --- Subgrupos existentes, se usa con frecuencia
 GMOD.subgroups = data.raw["item-subgroup"]
