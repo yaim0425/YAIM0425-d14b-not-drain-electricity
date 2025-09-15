@@ -65,8 +65,8 @@ function GMOD.duplicate_subgroup(old_name, new_name)
 
     if type(old_name) ~= "string" then return end
     if type(new_name) ~= "string" then return end
-    local Subgroup = GMOD.copy(GMOD.subgroups[old_name])
     if GMOD.subgroups[new_name] then return end
+    local Subgroup = GMOD.copy(GMOD.subgroups[old_name])
     if not Subgroup then return end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
