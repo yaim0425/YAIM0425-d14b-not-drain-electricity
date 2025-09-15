@@ -360,7 +360,6 @@ function GMOD.extend(...)
 
             GMOD.recipes[prototype.name] = GMOD.recipes[prototype.name] or {}
             table.insert(GMOD.recipes[prototype.name], prototype)
-            prototype.enabled = prototype.enabled or true
             return
         end
 
