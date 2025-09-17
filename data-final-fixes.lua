@@ -1260,33 +1260,33 @@ function This_MOD.set_localised()
 
         --- Valores a usar
         local Field = "localised_" .. field
-        local fluid = GMOD.fluids[name]
-        local item = GMOD.items[name]
+        local Fluid = GMOD.fluids[name]
+        local Item = GMOD.items[name]
 
         --- El resultado es un objeto
-        if item then
+        if Item then
             --- Nombre del objeto por defecto
-            recipe[Field] = item[Field]
+            recipe[Field] = Item[Field]
 
             --- Traducción para una entidad
-            if item.place_result then
-                local Entiy = GMOD.entities[item.place_result] or {}
-                item[Field] = Entiy[Field]
+            if Item.place_result then
+                local Entiy = GMOD.entities[Item.place_result] or {}
+                Item[Field] = Entiy[Field]
                 recipe[Field] = Entiy[Field]
             end
 
             --- Traducción para un suelo
-            if item.place_as_tile then
-                local tile = data.raw.tile[item.place_as_tile.result] or {}
-                item[Field] = tile[Field]
+            if Item.place_as_tile then
+                local tile = data.raw.tile[Item.place_as_tile.result] or {}
+                Item[Field] = tile[Field]
                 recipe[Field] = tile[Field]
             end
 
             --- Traducción para un equipamiento
-            if item.place_as_equipment_result then
-                local result = item.place_as_equipment_result
+            if Item.place_as_equipment_result then
+                local result = Item.place_as_equipment_result
                 local equipment = GMOD.equipments[result] or {}
-                item[Field] = equipment[Field]
+                Item[Field] = equipment[Field]
                 recipe[Field] = equipment[Field]
             end
 
@@ -1294,7 +1294,7 @@ function This_MOD.set_localised()
         end
 
         --- El resultado es un liquido
-        if fluid then recipe[Field] = fluid[Field] end
+        if Fluid then recipe[Field] = Fluid[Field] end
     end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
