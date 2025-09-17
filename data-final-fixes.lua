@@ -358,8 +358,12 @@ function GMOD.extend(...)
         while true do
             if prototype.type ~= "recipe" then break end
 
-            GMOD.recipes[prototype.name] = GMOD.recipes[prototype.name] or {}
-            table.insert(GMOD.recipes[prototype.name], prototype)
+            for _, result in pairs(prototype.results) do
+                if result.type == "item" then
+                    GMOD.recipes[result.name] = GMOD.recipes[result.name] or {}
+                    table.insert(GMOD.recipes[result.name], prototype)
+                end
+            end
             return
         end
 
