@@ -1270,14 +1270,14 @@ function This_MOD.set_localised()
 
             --- Traducción para una entidad
             if item.place_result then
-                local Entiy = GMOD.entities[item.place_result]
+                local Entiy = GMOD.entities[item.place_result] or {}
                 item[Field] = Entiy[Field]
                 recipe[Field] = Entiy[Field]
             end
 
             --- Traducción para un suelo
             if item.place_as_tile then
-                local tile = data.raw.tile[item.place_as_tile.result]
+                local tile = data.raw.tile[item.place_as_tile.result] or {}
                 item[Field] = tile[Field]
                 recipe[Field] = tile[Field]
             end
@@ -1285,11 +1285,9 @@ function This_MOD.set_localised()
             --- Traducción para un equipamiento
             if item.place_as_equipment_result then
                 local result = item.place_as_equipment_result
-                local equipment = GMOD.equipments[result]
-                if equipment then
-                    item[Field] = equipment[Field]
-                    recipe[Field] = equipment[Field]
-                end
+                local equipment = GMOD.equipments[result] or {}
+                item[Field] = equipment[Field]
+                recipe[Field] = equipment[Field]
             end
 
             --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
