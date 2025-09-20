@@ -1113,8 +1113,7 @@ function This_MOD.change_orders()
     for Key, Values in pairs({
         items = GMOD.items,
         fluids = GMOD.fluids,
-        recipes = GMOD.recipes,
-        entities = GMOD.entities
+        recipes = GMOD.recipes
     }) do
         if Key ~= "recipes" then Values = { Values } end
         for _, values in pairs(Values) do
@@ -1136,7 +1135,7 @@ function This_MOD.change_orders()
 
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    --- Objetos, recetas y demás
+    --- Objetos, recetas y fluidos
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     --- Inicializar las vaiables
@@ -1147,8 +1146,7 @@ function This_MOD.change_orders()
     for Key, Values in pairs({
         items = GMOD.items,
         fluids = GMOD.fluids,
-        recipes = GMOD.recipes,
-        entities = GMOD.entities
+        recipes = GMOD.recipes
     }) do
         if Key ~= "recipes" then Values = { Values } end
         for _, values in pairs(Values) do
