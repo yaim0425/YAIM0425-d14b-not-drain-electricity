@@ -289,6 +289,18 @@ function GMOD.pad_left_zeros(digits, value)
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
 
+--- Valida si el nombre contiene el id indicado
+--- @param name string
+--- @param id string
+--- @return boolean
+function GMOD.has_id(name, id)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    return name:find("%-" .. id .. "%-") ~= nil
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
 ---------------------------------------------------------------------------
 
 --- Copia cada tabla se copia siempre, sin compartir referencias
