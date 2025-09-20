@@ -1113,17 +1113,17 @@ function This_MOD.change_orders()
     for Key, Values in pairs({
         items = GMOD.items,
         fluids = GMOD.fluids,
-        recipes = GMOD.recipes
+        recipes = GMOD.recipes,
+        entities = GMOD.entities
     }) do
         if Key ~= "recipes" then Values = { Values } end
-        for _, values in ipairs(Values) do
-            for _, value in pairs(values) do
-                if not value.subgroup then
-                    value.subgroup = Empty.name
-                    value.order = value.name
+        for _, values in pairs(Values) do
+            for _, element in pairs(values) do
+                if not element.subgroup then
+                    element.subgroup = Empty.name
                 end
-                if not value.order then
-                    value.order = value.name
+                if not element.order then
+                    element.order = element.name
                 end
             end
         end
@@ -1144,19 +1144,15 @@ function This_MOD.change_orders()
     Source = {}
 
     --- Agrupar	los objetos, recetas y demás
-    for _, elements in pairs(data.raw) do
-        for _, element in pairs(elements) do
-            --- Evitar estos tipos
-            if element.type == "item-group" then break end
-            if element.type == "item-subgroup" then break end
-
-            --- El ciclo es solo para saltar
-            --- elementos no deseados
-            repeat
-                --- Validación
-                if not element.subgroup then break end
-                if not element.order then break end
-
+    for Key, Values in pairs({
+        items = GMOD.items,
+        fluids = GMOD.fluids,
+        recipes = GMOD.recipes,
+        entities = GMOD.entities
+    }) do
+        if Key ~= "recipes" then Values = { Values } end
+        for _, values in pairs(Values) do
+            for _, element in pairs(values) do
                 --- Elementos a agrupar
                 Source[element.subgroup] = Source[element.subgroup] or {}
                 table.insert(Source[element.subgroup], element)
@@ -1164,7 +1160,7 @@ function This_MOD.change_orders()
                 --- Elementos a ordenar
                 Orders[element.subgroup] = Orders[element.subgroup] or {}
                 table.insert(Orders[element.subgroup], element.order)
-            until true
+            end
         end
     end
 
