@@ -25,29 +25,17 @@ function This_MOD.start()
     --- Obtener los elementos
     This_MOD.get_elements()
 
-    -- --- Modificar los elementos
-    -- for _, spaces in pairs(This_MOD.to_be_processed) do
-    --     for _, space in pairs(spaces) do
-    --         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+    --- Modificar los elementos
+    for _, spaces in pairs(This_MOD.to_be_processed) do
+        for _, space in pairs(spaces) do
+            --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-    --         -- --- Crear los elementos
-    --         -- This_MOD.create_item(space)
-    --         -- This_MOD.create_entity(space)
-    --         -- This_MOD.create_recipe(space)
-    --         -- This_MOD.create_tech(space)
+            --- Actualizar las entidades
+            This_MOD.update_entity(space)
 
-    --         --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    --     end
-    -- end
-
-    -- --- Ejecutar otro MOD
-    -- if GMOD.d01b then
-    --     --- Cambiar el tamaño de la entidad
-    --     GMOD.d01b.start()
-    -- else
-    --     --- Fijar las posiciones actual
-    --     GMOD.d00b.change_orders()
-    -- end
+            --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+        end
+    end
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
@@ -154,6 +142,16 @@ function This_MOD.get_elements()
     for item_name, entity in pairs(GMOD.entities) do
         validate_entity(GMOD.items[item_name], entity)
     end
+
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+end
+
+---------------------------------------------------------------------------
+
+function This_MOD.update_entity(space)
+    --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+    space.entity.energy_source.drain = nil
 
     --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 end
